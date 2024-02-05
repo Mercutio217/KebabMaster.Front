@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import MenuItem from "../../pages/Menu/MenuItem";
 import OrderItem from "../../models/dtos/OrderItem";
+import MenuItemModel from "../../models/dtos/MenuItemModel";
 
 const init: any = {};
 
@@ -12,12 +12,12 @@ const basketSlice = createSlice({
       isBasketVisible: false
     },
     reducers: {
-      addItem: (state, { payload }: PayloadAction<MenuItem>) => {
+      addItem: (state, { payload }: PayloadAction<MenuItemModel>) => {
         const prev = state.value[payload.id];
         if(prev != null) {
-            state.value[payload.id] = {quantity: ++prev.quantity, menuItemId: payload.id } as OrderItem ;
+            state.value[payload.id] = {quantity: ++prev.quantity, name: payload.name,menuItemId: payload.id } as OrderItem ;
         } else {
-          state.value[payload.id] = {quantity: 1, menuItemId: payload.id} as OrderItem ;
+          state.value[payload.id] = {quantity: 1, name: payload.name, menuItemId: payload.id} as OrderItem ;
         }
         state.count++;
 
@@ -27,9 +27,10 @@ const basketSlice = createSlice({
         const prev = state.value[payload];
         if(prev != null) {
           if(prev.quantity > 1) {
-            state.value[payload] = { quantity: --prev.quantity, menuItemId: prev.menuItemId } as OrderItem;
-        } 
-        delete state.value[payload];
+            state.value[payload] = { quantity: --prev.quantity, name: prev.name, menuItemId: prev.menuItemId } as OrderItem;
+        } else {
+          delete state.value[payload];
+        }
 
         state.count--;
         }

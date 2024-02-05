@@ -1,0 +1,21 @@
+.menu-list {
+    width: 50%;
+    margin: auto;
+}
+
+.menu-list li {
+    display: flex;
+    justify-content: space-between;
+}
+.menu-list li span {
+    margin: auto 0;
+}
+
+.menu-list li:hover {
+    background-color: azure;
+}
+
+
+.menu-list li div button {
+    margin: 0.5em;
+}
