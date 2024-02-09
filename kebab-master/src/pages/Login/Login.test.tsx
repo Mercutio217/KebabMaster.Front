@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Sidebar from './Sidebar';
+import Login from './Login';
 
-describe('<Sidebar />', () => {
+describe('<Login />', () => {
   test('it should mount', () => {
-    render(<Sidebar />);
+    render(<Login />);
     
-    const sidebar = screen.getByTestId('Sidebar');
+    const login = screen.getByTestId('Login');
 
-    expect(sidebar).toBeInTheDocument();
+    expect(login).toBeInTheDocument();
   });
 });

@@ -15,14 +15,13 @@ const basketSlice = createSlice({
       addItem: (state, { payload }: PayloadAction<MenuItemModel>) => {
         const prev = state.value[payload.id];
         if(prev != null) {
-            state.value[payload.id] = {quantity: ++prev.quantity, name: payload.name,menuItemId: payload.id } as OrderItem ;
+            state.value[payload.id] = {quantity: ++prev.quantity, name: payload.name,menuItemId: payload.id, price: payload.price } as OrderItem ;
         } else {
-          state.value[payload.id] = {quantity: 1, name: payload.name, menuItemId: payload.id} as OrderItem ;
+          state.value[payload.id] = {quantity: 1, name: payload.name, menuItemId: payload.id, price: payload.price} as OrderItem ;
         }
         state.count++;
 
-      }
-      ,
+      },
       removeItem: (state, { payload } : PayloadAction<string>) => {
         const prev = state.value[payload];
         if(prev != null) {

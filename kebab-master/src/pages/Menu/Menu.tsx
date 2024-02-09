@@ -1,7 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import BasketModal from '../BasketModal/BasketModal';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 import MenuItem from './MenuItem';
 import MenuItemModel from '../../models/dtos/MenuItemModel';
 import './Menu.css';
@@ -12,7 +9,6 @@ const Menu: FC<MenuProps> = () => {
 
   const init: MenuItemModel[] = [];
   const [listMenu, setListMenu] = useState(init);
-  let visible = useSelector((state: RootState) => state.isBasketVisible);
 
   useEffect(() => {
     fetch('https://localhost:7011/Orders/menu')
@@ -22,14 +18,13 @@ const Menu: FC<MenuProps> = () => {
       .catch(error => console.error(error));
   }, [])
 
-  const arrayDataItems = listMenu.map((course) => <MenuItem key={course.id} item={course} />);
+  const arrayDataItems = listMenu.map(({id, name, price}) => <MenuItem key={id} id={id} name={name} price={price} />);
    
   return (
     <div data-testid="Menu">
       <ul className="list-group menu-list">
         {arrayDataItems}
       </ul>
-      {/* <BasketModal isVisible={visible}/> */}
     </div>
   );
   

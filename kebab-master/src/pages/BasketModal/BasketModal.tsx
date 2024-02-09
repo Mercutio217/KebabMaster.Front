@@ -5,6 +5,7 @@ import { RootState } from '../../store/store';
 import OrderItem from '../../models/dtos/OrderItem';
 import { useAppDispatch } from '../../hooks';
 import { switchBasket } from '../../store/slices/basketSlice';
+import { useNavigate } from 'react-router';
 
 interface BaskeModalProps {
   isVisible: boolean;
@@ -12,10 +13,15 @@ interface BaskeModalProps {
 
 const BasketModal: FC<BaskeModalProps> = (props: BaskeModalProps) => {
 
-  let basketMap = useSelector((state: RootState) => state.value);
+  let basketMap = useSelector((state: RootState) => state.basket.value);
   const propertyValues = Object.values(basketMap) as OrderItem[];
   const asList = propertyValues.map(item => <li className='list-group-item list-group-item-action'>{item.name} - {item.quantity}</li>)
   const dispatch = useAppDispatch();
+  const navigate = useNavigate(); 
+  const routeChange = () =>{
+    dispatch(switchBasket());
+    return navigate(`checkout`);
+  };
 
   return (
     <div className='modal-background' style={{ display: props.isVisible ? 'block' : 'none' }}>
@@ -32,7 +38,7 @@ const BasketModal: FC<BaskeModalProps> = (props: BaskeModalProps) => {
             </ul>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-primary">Checkout</button>
+            <button type="button" className="btn btn-primary" onClick={routeChange}>Checkout</button>
           </div>
         </div>
       </div>

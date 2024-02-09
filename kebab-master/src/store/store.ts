@@ -1,9 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { basketSlice } from "./slices/basketSlice";
 import { useDispatch } from "react-redux";
+import userDataSlice from "./slices/userDataslice";
 
 const store = configureStore({
-    reducer: basketSlice.reducer
+    reducer: combineReducers({basket: basketSlice.reducer, userData: userDataSlice.reducer})
   });
   
 export const useAppDispatch: (action: any) => AppDispatch = useDispatch // Export a hook that can be reused to resolve types

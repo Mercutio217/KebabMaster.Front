@@ -1,0 +1,12 @@
+.dropdown-container {
+    width: 100%;
+}
+
+.dropdown {
+    margin-left: 70%;
+    /* margin-left: 80%; */
+}
+
+.options-menu {
+    display: block;
+}

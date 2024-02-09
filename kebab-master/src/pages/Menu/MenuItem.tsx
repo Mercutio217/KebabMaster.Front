@@ -10,7 +10,7 @@ const MenuItem: FC<{ id: string, name: string, price: number } > = (props: { id:
 
   const add = () => store.dispatch(addItem(model))
   const remove = () => store.dispatch(removeItem(props.id))
-  var selector = useAppSelector(st => st.value[props.id]);
+  var selector = useAppSelector(st => st.basket.value[props.id]);
 
   return <li key={props.id} className="list-group-item list-flex">
     <span>{props.name} - {props.price}</span>
