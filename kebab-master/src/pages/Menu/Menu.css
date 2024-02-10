@@ -19,3 +19,8 @@
 .menu-list li div button {
     margin: 0.5em;
 }
+
+#menu-container {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}

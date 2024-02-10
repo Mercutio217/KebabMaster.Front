@@ -21,7 +21,7 @@ const Menu: FC<MenuProps> = () => {
   const arrayDataItems = listMenu.map(({id, name, price}) => <MenuItem key={id} id={id} name={name} price={price} />);
    
   return (
-    <div data-testid="Menu">
+    <div data-testid="Menu" id='menu-container'>
       <ul className="list-group menu-list">
         {arrayDataItems}
       </ul>

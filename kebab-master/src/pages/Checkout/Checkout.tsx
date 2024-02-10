@@ -36,7 +36,7 @@ const Checkout: FC<MenuProps> = () => {
           "streetName": "string",
           "streetNumber": 0,
           "flatNumber": 0
-        },
+        }, 
         "orderItems": propertyValues
       }
       ),

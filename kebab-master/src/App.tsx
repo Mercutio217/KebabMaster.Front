@@ -8,17 +8,23 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import BasketModal from './pages/BasketModal/BasketModal';
 import Checkout from './pages/Checkout/Checkout';
-import { NavigationMenu }  from './pages/NavigationMenu/NavigationMenu';
+import { NavigationMenu } from './pages/NavigationMenu/NavigationMenu';
 import Login from './pages/Login/Login';
 import UserPanel from './pages/UserPanel/UserPanel';
 function App() {
   const isBasketVisible = useSelector((state: RootState) => state.basket.isBasketVisible);
+  const style: React.CSSProperties = {
+    margin: 0,
+    backgroundColor: 'red',
+    height: '100%',
+    width: '100%'
+  }
 
   return (
     <>
-      <div className='content'>
+      <div style={style}>
         <BrowserRouter>
-        <NavigationMenu />
+          <NavigationMenu />
           <Routes>
             <Route path="/" element={<Menu />} />
             <Route index element={<Menu />} />

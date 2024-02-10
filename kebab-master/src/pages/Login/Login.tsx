@@ -3,6 +3,7 @@ import TokenResponse from '../../http/models/TokenResponse';
 import { useAppDispatch } from '../../hooks';
 import { login } from '../../store/slices/userDataslice';
 import { useNavigate } from 'react-router';
+import apiLogin from '../../http/httpService';
 
 
 interface LoginProps {}
@@ -16,28 +17,15 @@ const Login: FC<LoginProps> = () => {
 
   const handleSubmit = async (event:any) => {
     event.preventDefault();
-    const response = await fetch(' http://localhost:5046/authorization/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password}),
-      headers: {
-        'accept:': '*/*',
-        'Content-Type':'application/json'
-      }
-    });
-    
-    if(response.status != 200) {
-      if(response.status == 401){
-        setErrorMsg("Invalid password");
-        return;
-      }
-      setErrorMsg("Error");
-      return;
-    }
-    const result = await response.json() as TokenResponse;
-    dispatch(login(result));
-    navigate('/menu');
-
-  }
+    apiLogin(email, password, 
+      
+      (result: TokenResponse) => {
+      dispatch(login(result));
+      navigate('/menu');
+    }, 
+    () => setErrorMsg("Invalid password"),
+    ()=> setErrorMsg("Error"));
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -61,3 +49,4 @@ const Login: FC<LoginProps> = () => {
 };
 
 export default Login;
+
