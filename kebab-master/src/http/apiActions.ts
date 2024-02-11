@@ -1,13 +1,12 @@
 import MenuItemModel from "../models/dtos/MenuItemModel";
 import { Order } from "../models/dtos/Order";
-import OrderItem from "../models/dtos/OrderItem";
 import Endpoints from "./endpoints";
 import HttpMethods from "./httpMethods";
 import OrderRequest from "./models/OrderRequest";
 import OrderUserRequest from "./models/OrderUserRequest";
 import TokenResponse from "./models/TokenResponse";
 
-const jsonHeaders = {
+const jsonHeaders: any = {
   'accept': '*/*',
   'content-type': 'application/json'
 };
@@ -20,7 +19,7 @@ const apiLogin = async (email: string, password: string, successHandler: Functio
     headers: jsonHeaders
   });
 
-  if (response.status != 200) {
+  if (!response.status.toString().startsWith('20')) {
     if (response.status == 401 || response.status == 403) {
       unauthorizedHandler("Invalid password");
       return;
@@ -38,7 +37,7 @@ const apiGetMenu = async (successHandler: Function, errorHandler: Function) => {
     method: HttpMethods.GET,
   });
 
-  if (response.status != 200) {
+  if (!response.status.toString().startsWith('20')) {
 
     errorHandler("Error");
     return;
@@ -56,7 +55,7 @@ const apiGetOrders = async (id: string, token: string, successHandler: Function,
     headers: requestHeaders
   });
 
-  if (response.status != 200) {
+  if (!response.status.toString().startsWith('20')) {
     if (response.status == 401 || response.status == 403) {
       unauthorizedHandler("Invalid password");
       return;
@@ -69,40 +68,41 @@ const apiGetOrders = async (id: string, token: string, successHandler: Function,
 
 }
 
-const apiUpdateUSerData = async (id: string, token: string, successHandler: Function, unauthorizedHandler: Function, errorHandler: Function) => {
+const apiUpdateUserData = async (id: string, token: string, successHandler: Function, unauthorizedHandler: Function, errorHandler: Function) => {
   const requestHeaders: any = { authorization: `Bearer ${token}` };
   requestHeaders.authorization = `Bearer ${token}`;
   const response = await fetch(`${Endpoints.usersEndpoint}/${id}`, {
-    method: HttpMethods.GET,
+    method: HttpMethods.PUT,
     headers: requestHeaders
   });
 
-  if (response.status != 200) {
+  if (!response.status.toString().startsWith('20')) {
     if (response.status == 401 || response.status == 403) {
-      unauthorizedHandler("Invalid password");
+      unauthorizedHandler("Authorization issue");
       return;
     }
     errorHandler("Error");
     return;
   }
-  const result = await response.json() as Order[];
-  successHandler(result);
+  successHandler();
 
 }
 
 
-const apiSubmitOrder = async (request: OrderRequest | OrderUserRequest | any, successHandler: Function, errorHandler: Function) => {
+const apiSubmitOrder = async (request: OrderRequest | OrderUserRequest | any, token: string, successHandler: Function, errorHandler: Function) => {
   let parsed = request as any;
-
+  const headers = {...jsonHeaders};
   let endpoint = Endpoints.ordersEndpoint;
   if(instanceOfOrderUserRequest(request)) {
     endpoint = `${Endpoints.usersEndpoint}/${parsed.id}/orders`;
+    headers.authorization = `Bearer ${token}`;
+
   }
 
   const response = await fetch(endpoint, {
     method: HttpMethods.POST,
     body: JSON.stringify(request),
-    headers: jsonHeaders
+    headers: headers
   });
 
   if (!response.status.toString().startsWith('20')) {

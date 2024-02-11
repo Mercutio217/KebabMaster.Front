@@ -20,6 +20,7 @@ const Checkout: FC<MenuProps> = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state: RootState) => state.userData);
   const isLogged = userData.token != '';
+  
   const trySetStreetNumber = (toParse: string) => {
     const int = parseInt(toParse);
     if (!isNaN(int) && int > 0) {

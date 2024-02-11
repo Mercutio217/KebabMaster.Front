@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
 import './NavigationMenu.css'
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { useAppDispatch } from "../../hooks";
-import { clearBasket, switchBasket } from "../../store/slices/basketSlice";
-import { logout } from "../../store/slices/userDataslice";
+import { RootState } from "../../../store/store";
+import { useAppDispatch } from "../../../hooks";
+import { clearBasket, switchBasket } from "../../../store/slices/basketSlice";
+import { logout } from "../../../store/slices/userDataslice";
 
 export const NavigationMenu: FC = () => {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ export const NavigationMenu: FC = () => {
             </button>
             {isDropdownVisible &&
                 <div className="dropdown-menu options-menu" aria-labelledby="dropdownMenuButton" onMouseLeave={() => setIsDropdownVisible(false)}>
-                    <a className="dropdown-item">Profile</a>
+                    <a className="dropdown-item" onClick={()=> navigate('/profile')}>Profile</a>
                     <a className="dropdown-item" onClick={()=> navigate('/orders')}>My Orders</a>
                     <a className="dropdown-item" onClick={logoutAction} >Logout </a>
                 </div>
