@@ -47,22 +47,22 @@ const Profile: FC = () => {
         <div className="input-group-prepend">
           <span className="input-group-text">Username</span>
         </div>
-        <input type="text" className="form-control" aria-label="Default" value={userName} onChange={(event) => changeHandler(event.target.value, setUserName)} aria-describedby="inputGroup-sizing-default" />
+        {userName}
       </div>
 
       <div className="input-group mb-3 input-group-sm">
         <div className="input-group-prepend">
           <span className="input-group-text">Name</span>
         </div>
-        <input type="text" className="form-control" aria-label="Default" value={name} onChange={(event) => changeHandler(event.target.value, setName)} aria-describedby="inputGroup-sizing-default" />
+        <p>{name}</p>
+        <input type="text" readOnly className="form-control" aria-label="Default" value={name} onChange={(event) => changeHandler(event.target.value, setName)} aria-describedby="inputGroup-sizing-default" />
       </div>
       <div className="input-group mb-3 input-group-sm">
         <div className="input-group-prepend">
           <span className="input-group-text">Surname</span>
         </div>
-        <input type="text" className="form-control" aria-label="Default"value={surname} onChange={(event) => changeHandler(event.target.value, setSurname)} aria-describedby="inputGroup-sizing-default" />
+        {userName}
       </div>
-      <button className='btn btn-primary' onClick={() => updateData()} disabled={!hasChanged}>Update Profile order</button>
     </div>
   );
 };

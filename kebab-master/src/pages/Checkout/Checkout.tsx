@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import OrderItem from '../../models/dtos/OrderItem';
 import { useNavigate } from 'react-router';
 import { RootState } from '../../store/store';
-import { apiSubmitOrder, apiSubmitUserOrder } from '../../http/apiActions';
+import { apiSubmitOrder } from '../../http/apiActions';
 import { setErrorMessage, setSuccessMessage } from '../../store/slices/commonSlice';
 import OrderRequest from '../../http/models/OrderRequest';
 import './Checkout.css';
@@ -19,15 +19,17 @@ const Checkout: FC<MenuProps> = () => {
   const [flatNumber, setFlatNumber] = useState(0);
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state: RootState) => state.userData);
-  const isLogged = userData.token != '';
-  
+  const isLogged = userData.token !== '';
+  if (isLogged) {
+    setEmail(userData.userData.email);
+  }
   const trySetStreetNumber = (toParse: string) => {
     const int = parseInt(toParse);
     if (!isNaN(int) && int > 0) {
       setStreetNumber(int);
     }
   };
- 
+
   const trySetFlatNumber = (toParse: string) => {
     const int = parseInt(toParse);
     if (!isNaN(int) && int > 0) {
@@ -73,13 +75,13 @@ const Checkout: FC<MenuProps> = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    apiSubmitOrder(order,
+    apiSubmitOrder(order, userData.token,
       () => dispatch(setSuccessMessage("Order Completed Successfully")),
       () => dispatch(setErrorMessage("Something went wrong, try again. If problem persists, please contact support.")));
   }
 
-  const isActive = 
-    email != null && email !== '' &&
+  const isActive =
+    ((email != null && email !== '') || isLogged) &&
     streetName != null && streetName !== '' &&
     streetNumber > 0;
 
@@ -93,7 +95,12 @@ const Checkout: FC<MenuProps> = () => {
         <div className="input-group-prepend">
           <span className="input-group-text">Email</span>
         </div>
-        <input type="text" className="form-control" aria-label="Default" value={isLogged ? userData.userData.email : ''} readOnly={isLogged} onChange={(event) => setEmail(event.target.value)} aria-describedby="inputGroup-sizing-default" />
+        {isLogged ?
+          <input type="text" className="form-control" aria-label="Default" value={userData.userData.email} readOnly onChange={(event) => setEmail(event.target.value)} aria-describedby="inputGroup-sizing-default" />
+          :
+          <input type="text" className="form-control" aria-label="Default" onChange={(event) => setEmail(event.target.value)} aria-describedby="inputGroup-sizing-default" />
+
+        }
       </div>
 
       <div className="input-group mb-3 input-group-sm">
@@ -120,6 +127,7 @@ const Checkout: FC<MenuProps> = () => {
 
       </div>
       <ul className="list-group">
+        <li className="list-group-item"> Orderered Items </li>
         {mapped}
       </ul>
       <div>

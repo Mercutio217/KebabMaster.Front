@@ -27,7 +27,7 @@ const Login: FC<LoginProps> = () => {
       password,
       (result: TokenResponse) => loginUser(result),
       () => dispatch(setErrorMessage("Invalid password")),
-      () =>  dispatch(setErrorMessage("Error!")))
+      () =>  dispatch(setErrorMessage("Invalid user credentials")))
   };
 
   return (

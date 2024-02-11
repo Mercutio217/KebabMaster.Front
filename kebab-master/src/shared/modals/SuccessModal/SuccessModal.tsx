@@ -26,14 +26,13 @@ const SuccessModal: FC<ErrorModalProps> = () => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Error!</h5>
+            <h5 className="modal-title">Success!</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}></button>
           </div>
           <div className="modal-body">
             <h3>{successMsg}</h3>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-primary" onClick={handleClose}>Checkout</button>
           </div>
         </div>
       </div>
