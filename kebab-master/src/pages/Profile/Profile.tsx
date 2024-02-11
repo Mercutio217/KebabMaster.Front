@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks";
 import { FC, useState } from "react";
 import { RootState } from "../../store/store";
+import { apiUpdateUserData } from "../../http/apiActions";
+import { setErrorMessage, setSuccessMessage } from "../../store/slices/commonSlice";
 
 const Profile: FC = () => {
   const userData = useSelector((state: RootState) => state.userData)
@@ -13,8 +15,8 @@ const Profile: FC = () => {
     navigate('/menu');
   }
   const [ name, setName ] = useState(userData.userData.name);
-  const [ surname, setSurname ] = useState(userData.userData.name);
-  const [ userName, setUserName ] = useState(userData.userData.name);
+  const [ surname, setSurname ] = useState(userData.userData.surname);
+  const [ userName, setUserName ] = useState(userData.userData.userName);
 
   if (userData.userData.id == null) {
     navigate('/');
@@ -24,6 +26,18 @@ const Profile: FC = () => {
   const changeHandler = (value: string, setFunction: Function) => {
     hasChanged = true;
     setFunction(value);
+  }
+
+  const updateData = () => {    
+    apiUpdateUserData({
+      id: userData.userData.id,
+      name: userData.userData.name,
+      surname: userData.userData.surname,
+      userName: userData.userData.userName
+    }, userData.token, 
+    () => dispatch(setSuccessMessage('Data updated successfully!')),
+    (msg: string) => dispatch(setErrorMessage(msg)),
+    (msg: string) => dispatch(setErrorMessage(msg)));
   }
 
   return (
@@ -48,7 +62,7 @@ const Profile: FC = () => {
         </div>
         <input type="text" className="form-control" aria-label="Default"value={surname} onChange={(event) => changeHandler(event.target.value, setSurname)} aria-describedby="inputGroup-sizing-default" />
       </div>
-      <button className='btn btn-primary' disabled={!hasChanged}>Update Profile order</button>
+      <button className='btn btn-primary' onClick={() => updateData()} disabled={!hasChanged}>Update Profile order</button>
     </div>
   );
 };
