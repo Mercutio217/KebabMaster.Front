@@ -2,21 +2,22 @@ import React, { FC, useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 import MenuItemModel from '../../models/dtos/MenuItemModel';
 import './Menu.css';
+import { apiGetMenu } from '../../http/apiActions';
+import { useAppDispatch } from '../../hooks';
+import { setErrorMessage } from '../../store/slices/commonSlice';
 
 interface MenuProps {}
 
 const Menu: FC<MenuProps> = () => {
 
+  const dispatch = useAppDispatch();
   const init: MenuItemModel[] = [];
   const [listMenu, setListMenu] = useState(init);
-
   useEffect(() => {
-    fetch('https://localhost:7011/Orders/menu')
-      .then(response => response.json())
-      .then(js => js as MenuItemModel[])
-      .then(casted => setListMenu(casted))
-      .catch(error => console.error(error));
-  }, [])
+    apiGetMenu(
+      (casted:MenuItemModel[]) => setListMenu(casted),
+      () => dispatch(setErrorMessage("Problem with connection to the server! ")))
+  },[]);
 
   const arrayDataItems = listMenu.map(({id, name, price}) => <MenuItem key={id} id={id} name={name} price={price} />);
    

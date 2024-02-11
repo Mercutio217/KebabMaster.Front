@@ -4,6 +4,7 @@ import UserData from "../../http/models/UserData";
 
 const initRoles:string[] = [];
 const initUserData:UserData = {
+    id: "",
     email: "",
     userName: "",
     name: "",

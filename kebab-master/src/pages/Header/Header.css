@@ -1,0 +1,14 @@
+#header {
+    height: 5em;
+    background-image: url('../../statics/kebabBg.jpg');
+    background-size: contain;
+}
+
+#header h1 {
+    color: red;
+    width: fit-content;
+    height: 100%;
+    padding: auto;
+    background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(255, 255, 255));
+
+}

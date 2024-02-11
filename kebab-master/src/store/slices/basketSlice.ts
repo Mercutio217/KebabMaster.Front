@@ -37,9 +37,13 @@ const basketSlice = createSlice({
       },
       switchBasket:(state) => {
         state.isBasketVisible = !state.isBasketVisible;
+      },
+      clearBasket: (state) => {
+        state.value = {};
+        state.count = 0;
       }
     }
   });
 
-export const { addItem, removeItem, switchBasket } = basketSlice.actions;
+export const { addItem, removeItem, switchBasket, clearBasket } = basketSlice.actions;
 export { basketSlice };

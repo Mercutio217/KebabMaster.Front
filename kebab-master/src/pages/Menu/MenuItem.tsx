@@ -23,7 +23,7 @@ const MenuItem: FC<{ id: string, name: string, price: number } > = (props: { id:
       {selector != null && <span>{selector.quantity}</span>}
       {selector != null &&      
       <button type="button" className="btn btn-danger" onClick={remove}>
-        <svg xmlns="http://www.w3.org/2000/svg"  width="25" height="25" fill="currentColor" className="bi bi-file-minus" viewBox="0 0 25 25">
+        <svg xmlns="http://www.w3.org/2000/svg"  width="25" height="25s" fill="currentColor" className="bi bi-file-minus" viewBox="0 0 16 16">
           <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5" />
         </svg>
       </button>}

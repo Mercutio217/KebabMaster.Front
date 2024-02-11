@@ -1,0 +1,9 @@
+#checkout-container {
+    margin-left: 1em;
+}
+
+#checkout-container .list-group,
+#checkout-container .input-group {
+    width: fit-content;
+    max-width: 30%;
+}
